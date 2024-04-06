@@ -3,12 +3,12 @@ require_relative '../boat'
 RSpec.describe Boat do
 
   let(:boat) { Boat.new }
-  let(:initial_possible_passengers) {['D', 'D', 'D', 'M', 'M', 'M']}
+  let(:all_passengers) {['D', 'D', 'D', 'M', 'M', 'M']}
 
-  it 'initiates with 3 passenger combinations and no current passengers' do
+  it 'initiates with 6 possible passengers and no current passengers' do
     
     expected_current_passengers = []
-    expect(boat.possible_passengers).to eq(initial_possible_passengers)
+    expect(boat.possible_passengers).to eq(all_passengers)
     expect(boat.current_passengers).to eq(expected_current_passengers)
   end
 
@@ -54,7 +54,7 @@ RSpec.describe Boat do
 
       4.times { boat.select_passengers }
 
-      expect(boat.possible_passengers).to eq(initial_possible_passengers)
+      expect(boat.possible_passengers).to eq(all_passengers)
     end
 
   end
