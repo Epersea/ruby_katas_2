@@ -3,12 +3,12 @@ require_relative '../boat'
 RSpec.describe Boat do
 
   let(:boat) { Boat.new }
-  let(:initial_passenger_combinations) {['DD', 'MD', 'MM']}
+  let(:initial_possible_passengers) {['D', 'D', 'D', 'M', 'M', 'M']}
 
   it 'initiates with 3 passenger combinations and no current passengers' do
     
     expected_current_passengers = []
-    expect(boat.passenger_combinations).to eq(initial_passenger_combinations)
+    expect(boat.possible_passengers).to eq(initial_possible_passengers)
     expect(boat.current_passengers).to eq(expected_current_passengers)
   end
 
@@ -16,19 +16,19 @@ RSpec.describe Boat do
 
     boat.select_passengers
 
-    expected_passenger_combinations = ['DD', 'MD']
-    expected_current_passengers = ['MM']
-    expect(boat.passenger_combinations).to eq(expected_passenger_combinations)
+    expected_possible_passengers = ['D', 'D', 'D', 'M']
+    expected_current_passengers = ['M', 'M']
+    expect(boat.possible_passengers).to eq(expected_possible_passengers)
     expect(boat.current_passengers).to eq(expected_current_passengers)
   end
 
-  it 'selects one monk and one devil second' do
+  it 'selects one devil and one monk second' do
 
     2.times { boat.select_passengers }
 
-    expected_passenger_combinations = ['DD']
-    expected_current_passengers = ['MD']
-    expect(boat.passenger_combinations).to eq(expected_passenger_combinations)
+    expected_possible_passengers = ['D', 'D']
+    expected_current_passengers = ['D', 'M']
+    expect(boat.possible_passengers).to eq(expected_possible_passengers)
     expect(boat.current_passengers).to eq(expected_current_passengers)
   end
 
@@ -36,9 +36,9 @@ RSpec.describe Boat do
 
     3.times { boat.select_passengers }
 
-    expected_passenger_combinations = []
-    expected_current_passengers = ['DD']
-    expect(boat.passenger_combinations).to eq(expected_passenger_combinations)
+    expected_possible_passengers = []
+    expected_current_passengers = ['D', 'D']
+    expect(boat.possible_passengers).to eq(expected_possible_passengers)
     expect(boat.current_passengers).to eq(expected_current_passengers)
   end
 
@@ -54,7 +54,7 @@ RSpec.describe Boat do
 
       4.times { boat.select_passengers }
 
-      expect(boat.passenger_combinations).to eq(initial_passenger_combinations)
+      expect(boat.possible_passengers).to eq(initial_possible_passengers)
     end
 
   end

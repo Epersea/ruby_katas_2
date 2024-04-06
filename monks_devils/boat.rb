@@ -1,21 +1,21 @@
 class Boat
-  attr_reader :passenger_combinations, :current_passengers
+  attr_reader :possible_passengers, :current_passengers
 
   def initialize
-    @passenger_combinations = initial_passenger_combinations
+    @possible_passengers = initial_possible_passengers
     @current_passengers = []
   end
 
   def select_passengers
-    @current_passengers = []
-    if @passenger_combinations.empty?
-      @passenger_combinations = initial_passenger_combinations
+    if @possible_passengers.empty?
+      @current_passengers = []
+      @possible_passengers = initial_possible_passengers
     else
-      @current_passengers << @passenger_combinations.pop
+      @current_passengers = @possible_passengers.pop(2)
     end
   end
 
-  def initial_passenger_combinations
-    ['DD', 'MD', 'MM']
+  def initial_possible_passengers
+    ['D', 'D', 'D', 'M', 'M', 'M']
   end
 end
