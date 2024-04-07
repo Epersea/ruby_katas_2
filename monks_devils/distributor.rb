@@ -10,6 +10,10 @@ class Distributor
   end
 
   def initiate_trip
+    obtain_current_state
+  end
+
+  def obtain_current_state
     @current_state = @states_to_try.pop
   end
 end

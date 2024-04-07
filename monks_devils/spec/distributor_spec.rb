@@ -2,12 +2,12 @@ require_relative '../distributor'
 require_relative '../state'
 
 RSpec.describe Distributor do
-  it 'pops state to check and adds it to current state' do
+  it 'obtains current state' do
     distributor = Distributor.new
     expect(distributor.states_to_try).not_to be_empty
     expect(distributor.current_state).to be_empty
     
-    distributor.initiate_trip 
+    distributor.obtain_current_state
     
     expect(distributor.current_state.shore_1).to eq(initial_shore_1)
     expect(distributor.current_state.shore_2).to be_empty
