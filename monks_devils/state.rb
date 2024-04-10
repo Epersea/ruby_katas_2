@@ -12,23 +12,32 @@ class State
   end
 
   def validate
-    if @shore_2.sort == all_passengers
+    if all_passengers_in_shore_2
       return 'FINISHED'
+    elsif more_devils_than_monks_in_shore_1
+      return 'INVALID'
+    elsif more_devils_than_monks_in_shore_2
+      return 'INVALID'
+    else
+      return 'VALID'
     end
-
-    count_devils_and_monks
   end
 
-  def count_devils_and_monks
+  def all_passengers_in_shore_2
+    @shore_2.sort == all_passengers
+  end
+
+  def more_devils_than_monks_in_shore_1
     devils_shore_1 = @shore_1.count('D')
     monks_shore_1 = @shore_1.count('M')
+
+    (devils_shore_1 > monks_shore_1) && monks_shore_1 > 0
+  end
+
+  def more_devils_than_monks_in_shore_2
     devils_shore_2 = @shore_2.count('D')
     monks_shore_2 = @shore_2.count('M')
 
-    if (devils_shore_1 > monks_shore_1) && monks_shore_1 > 0  || (devils_shore_2 > monks_shore_2) && monks_shore_2 > 0
-      'INVALID'
-    else 
-      'VALID'
-    end
+    (devils_shore_2 > monks_shore_2) && monks_shore_2 > 0
   end
 end
