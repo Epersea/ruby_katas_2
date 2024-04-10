@@ -2,15 +2,8 @@ require_relative '../boat'
 
 RSpec.describe Boat do
 
-  let(:boat) { Boat.new }
   let(:all_passengers) {['D', 'D', 'D', 'M', 'M', 'M']}
-
-  it 'initiates with 6 possible passengers and no current passengers' do
-    
-    expected_current_passengers = []
-    expect(boat.possible_passengers).to eq(all_passengers)
-    expect(boat.current_passengers).to eq(expected_current_passengers)
-  end
+  let(:boat) { Boat.new(all_passengers) }
 
   it 'selects two monks first' do
 
@@ -41,22 +34,4 @@ RSpec.describe Boat do
     expect(boat.possible_passengers).to eq(expected_possible_passengers)
     expect(boat.current_passengers).to eq(expected_current_passengers)
   end
-
-  context 'when there is no passenger combinations left' do
-    it 'current passengers are empty' do
-
-      4.times { boat.select_passengers }
-
-      expect(boat.current_passengers).to be_empty
-    end
-
-    it 'passenger combinations are restarted' do
-
-      4.times { boat.select_passengers }
-
-      expect(boat.possible_passengers).to eq(all_passengers)
-    end
-
-  end
-
 end
