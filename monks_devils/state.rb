@@ -13,13 +13,13 @@ class State
 
   def validate
     if all_passengers_in_shore_2
-      return 'FINISHED'
+      'FINISHED'
     elsif more_devils_than_monks_in_shore_1
-      return 'INVALID'
+      'INVALID'
     elsif more_devils_than_monks_in_shore_2
-      return 'INVALID'
+      'INVALID'
     else
-      return 'VALID'
+      'VALID'
     end
   end
 
