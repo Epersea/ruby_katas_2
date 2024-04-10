@@ -21,21 +21,21 @@ class Distributor
       while !boat.possible_passengers.empty?
         boat.select_passengers
        
-        temporal_state = calculate_new_state(boat) 
+        candidate_state = calculate_new_state(boat) 
         
-        validation = temporal_state.validate
+        validation = candidate_state.validate
       
         if validation == 'FINISHED'
           solution_found = true
           break
         elsif validation == 'VALID'
-          @states_to_try << temporal_state
+          @states_to_try << candidate_state
           break
         end
       end
     end
 
-    return temporal_state.trips
+    candidate_state.trips
   end
 
   def obtain_current_state
