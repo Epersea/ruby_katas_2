@@ -1,5 +1,5 @@
 class State
-  attr_reader :shore_1, :shore_2, :trips
+  attr_accessor :shore_1, :shore_2, :trips
 
   def initialize(shore_1 = all_passengers, shore_2 = [], trips = [])
     @shore_1 = shore_1
@@ -25,7 +25,7 @@ class State
     devils_shore_2 = @shore_2.count('D')
     monks_shore_2 = @shore_2.count('M')
 
-    if devils_shore_1 > monks_shore_1 || devils_shore_2 > monks_shore_2
+    if (devils_shore_1 > monks_shore_1) && monks_shore_1 > 0  || (devils_shore_2 > monks_shore_2) && monks_shore_2 > 0
       'INVALID'
     else 
       'VALID'
