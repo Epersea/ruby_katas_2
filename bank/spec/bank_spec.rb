@@ -13,18 +13,15 @@ RSpec.describe Bank do
       Timecop.freeze(2012, 1, 13)
       bank.deposit(2000)
 
-      # Timecop.freeze(2012, 1, 14)
-      # bank.withdraw(500)
+      Timecop.freeze(2012, 1, 14)
+      bank.withdraw(500)
 
       statement = bank.print_statement
-      expect(statement).to eq(expected_statement)
+      expect(statement.strip).to eq(expected_statement.strip)
     end
 
     def expected_statement
-      "Date || Amount || Balance
-      14/01/2012 || -500 || 2500
-      13/01/2012 || 2000 || 3000
-      10/01/2012 || 1000 || 1000"
+      "Date || Amount || Balance\n14/01/2012 || -500 || 2500\n13/01/2012 || 2000 || 3000\n10/01/2012 || 1000 || 1000"
     end
   end
 

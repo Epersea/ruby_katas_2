@@ -11,6 +11,11 @@ class Bank
     record_transaction(amount)
   end
 
+  def withdraw(amount)
+    @balance -= amount
+    record_transaction(-amount)
+  end
+
   def print_statement
     statement = "Date || Amount || Balance\n"
     @transactions.each do |transaction|
