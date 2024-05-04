@@ -6,17 +6,9 @@ class Bank
     @transactions = []
   end
 
-  def balance
-    @balance
-  end
-
   def deposit(amount)
     @balance += amount
     record_transaction(amount)
-  end
-
-  def transactions
-    @transactions
   end
 
   def print_statement

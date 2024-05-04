@@ -3,11 +3,10 @@ require_relative '../bank'
 
 RSpec.describe Bank do
 
-  let(:bank) { Bank.new }
-
   context 'Acceptance test' do
     it 'implements desired behaviour' do
-      
+      bank = Bank.new
+
       Timecop.freeze(2012, 1, 10)
       bank.deposit(1000)
 
@@ -30,6 +29,7 @@ RSpec.describe Bank do
   end
 
   context 'Unit tests' do
+    let(:bank) { BankHelper.new }
     context 'After a deposit' do
       before(:each) do
         Timecop.freeze(2012, 1, 10)
@@ -44,6 +44,17 @@ RSpec.describe Bank do
       it 'transaction is recorded' do
         expect(bank.transactions).to eq([{:amount=>1000, :balance=>1000, :date=>"10/01/2012"}])
       end
+    end
+  end
+
+
+  class BankHelper < Bank
+    def balance
+      @balance
+    end
+
+    def transactions
+      @transactions
     end
   end
 end
