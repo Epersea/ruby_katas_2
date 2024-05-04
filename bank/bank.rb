@@ -22,7 +22,7 @@ class Bank
   def print_statement
     statement = "Date || Amount || Balance\n"
     @transactions.each do |transaction|
-      statement += "#{transaction[0].strftime("%d/%m/%Y")} || #{transaction[1]} || #{transaction[2]}\n"
+      statement += "#{transaction[:date]} || #{transaction[:amount]} || #{transaction[:balance]}\n"
     end
 
     statement
@@ -30,6 +30,10 @@ class Bank
 
   private
     def record_transaction(amount)
-      @transactions.unshift([Date.today, amount, balance])
+      @transactions.unshift({
+        date: Date.today.strftime("%d/%m/%Y"),
+        amount: amount,
+        balance: @balance
+      })
     end
 end

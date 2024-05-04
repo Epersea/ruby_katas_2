@@ -42,7 +42,7 @@ RSpec.describe Bank do
       end
 
       it 'transaction is recorded' do
-        expect(bank.transactions).to eq([[Date.new(2012, 1, 10), 1000, 1000]])
+        expect(bank.transactions).to eq([{:amount=>1000, :balance=>1000, :date=>"10/01/2012"}])
       end
     end
   end
