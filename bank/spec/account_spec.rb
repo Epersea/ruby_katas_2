@@ -1,22 +1,22 @@
 require 'timecop'
-require_relative '../bank'
+require_relative '../account'
 
-RSpec.describe Bank do
+RSpec.describe Account do
 
   context 'Acceptance test' do
     it 'implements desired behaviour' do
-      bank = Bank.new
+      account = Account.new
 
       Timecop.freeze(2012, 1, 10)
-      bank.deposit(1000)
+      account.deposit(1000)
 
       Timecop.freeze(2012, 1, 13)
-      bank.deposit(2000)
+      account.deposit(2000)
 
       Timecop.freeze(2012, 1, 14)
-      bank.withdraw(500)
+      account.withdraw(500)
 
-      statement = bank.print_statement
+      statement = account.print_statement
       expect(statement.strip).to eq(expected_statement.strip)
     end
 
@@ -26,26 +26,26 @@ RSpec.describe Bank do
   end
 
   context 'Unit tests' do
-    let(:bank) { BankHelper.new }
+    let(:account) { AccountHelper.new }
     context 'After a deposit' do
       before(:each) do
         Timecop.freeze(2012, 1, 10)
-        bank.deposit(1000)
+        account.deposit(1000)
       end
 
       it 'balance goes up' do
         expected_balance = 1000
-        expect(bank.balance).to eq(expected_balance)
+        expect(account.balance).to eq(expected_balance)
       end
 
       it 'transaction is recorded' do
-        expect(bank.transactions).to eq([{:amount=>1000, :balance=>1000, :date=>"10/01/2012"}])
+        expect(account.transactions).to eq([{:amount=>1000, :balance=>1000, :date=>"10/01/2012"}])
       end
     end
   end
 
 
-  class BankHelper < Bank
+  class AccountHelper < Account
     def balance
       @balance
     end
