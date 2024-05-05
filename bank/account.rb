@@ -17,12 +17,10 @@ class Account
   end
 
   def print_statement
-    statement = "Date || Amount || Balance\n"
+    puts "Date || Amount || Balance\n"
     @transactions.each do |transaction|
-      statement += "#{transaction[:date]} || #{transaction[:amount]} || #{transaction[:balance]}\n"
+      puts "#{transaction[:date]} || #{transaction[:amount]} || #{transaction[:balance]}\n"
     end
-
-    statement
   end
 
   private

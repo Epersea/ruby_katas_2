@@ -16,12 +16,11 @@ RSpec.describe Account do
       Timecop.freeze(2012, 1, 14)
       account.withdraw(500)
 
-      statement = account.print_statement
-      expect(statement.strip).to eq(expected_statement.strip)
+      expect { account.print_statement }.to output(expected_statement).to_stdout
     end
 
     def expected_statement
-      "Date || Amount || Balance\n14/01/2012 || -500 || 2500\n13/01/2012 || 2000 || 3000\n10/01/2012 || 1000 || 1000"
+      "Date || Amount || Balance\n14/01/2012 || -500 || 2500\n13/01/2012 || 2000 || 3000\n10/01/2012 || 1000 || 1000\n"
     end
   end
 
