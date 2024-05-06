@@ -5,11 +5,12 @@ require_relative '../statement_printer'
 
 RSpec.describe Account do
 
+  let(:transaction_repository) { TransactionRepository.new}
+  let(:statement_printer) { StatementPrinter.new}
+  let(:account) { AccountHelper.new(transaction_repository, statement_printer) }
+
   context 'Acceptance test' do
     it 'implements desired behaviour' do
-      transaction_repository = TransactionRepository.new
-      statement_printer = StatementPrinter.new
-      account = Account.new(transaction_repository, statement_printer)
 
       Timecop.freeze(2012, 1, 10)
       account.deposit(1000)
@@ -29,9 +30,6 @@ RSpec.describe Account do
   end
 
   context 'Unit tests' do
-    let(:transaction_repository) { TransactionRepository.new}
-    let(:statement_printer) { StatementPrinter.new}
-    let(:account) { AccountHelper.new(transaction_repository, statement_printer) }
     
     context 'After a deposit' do
       it 'balance goes up' do
