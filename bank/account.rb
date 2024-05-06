@@ -1,9 +1,10 @@
 require 'timecop'
 
 class Account
-  def initialize(repository)
+  def initialize(repository, printer)
     @balance = 0
     @repository = repository
+    @printer = printer
   end
 
   def deposit(amount)
@@ -17,9 +18,7 @@ class Account
   end
 
   def print_statement
-    puts "Date || Amount || Balance\n"
-    @transactions.each do |transaction|
-      puts "#{transaction[:date]} || #{transaction[:amount]} || #{transaction[:balance]}\n"
-    end
+    transactions = @repository.transactions
+    @printer.print(transactions)
   end
 end

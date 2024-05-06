@@ -1,13 +1,15 @@
 require 'timecop'
 require_relative '../account'
 require_relative '../transaction_repository'
+require_relative '../statement_printer'
 
 RSpec.describe Account do
 
   context 'Acceptance test' do
     it 'implements desired behaviour' do
       transaction_repository = TransactionRepository.new
-      account = Account.new(transaction_repository)
+      statement_printer = StatementPrinter.new
+      account = Account.new(transaction_repository, statement_printer)
 
       Timecop.freeze(2012, 1, 10)
       account.deposit(1000)
@@ -28,7 +30,8 @@ RSpec.describe Account do
 
   context 'Unit tests' do
     let(:transaction_repository) { TransactionRepository.new}
-    let(:account) { AccountHelper.new(transaction_repository) }
+    let(:statement_printer) { StatementPrinter.new}
+    let(:account) { AccountHelper.new(transaction_repository, statement_printer) }
     
     context 'After a deposit' do
       it 'balance goes up' do
@@ -55,6 +58,13 @@ RSpec.describe Account do
         expect(transaction_repository).to receive(:add_withdrawal_transaction).with(500, -500)
         account.withdraw(500)
       end
+    end
+
+    it 'When printing a statement, it gets all transactions all calls the printer' do
+  
+      expect(transaction_repository).to receive(:transactions)
+      expect(statement_printer).to receive(:print)
+      account.print_statement
     end
   end
 
