@@ -38,7 +38,7 @@ RSpec.describe Account do
       end
 
       it 'transaction repository is called to add the transaction' do
-        expect(transaction_repository).to receive(:add_deposit_transaction).with(1000)
+        expect(transaction_repository).to receive(:add_deposit_transaction).with(1000, 1000)
         account.deposit(1000)
       end
     end
@@ -52,7 +52,7 @@ RSpec.describe Account do
       end
 
       it 'transaction repository is called to add the transaction' do
-        expect(transaction_repository).to receive(:add_withdrawal_transaction).with(500)
+        expect(transaction_repository).to receive(:add_withdrawal_transaction).with(500, -500)
         account.withdraw(500)
       end
     end

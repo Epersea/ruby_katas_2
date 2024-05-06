@@ -8,12 +8,12 @@ class Account
 
   def deposit(amount)
     @balance += amount
-    @repository.add_deposit_transaction(amount)
+    @repository.add_deposit_transaction(amount, @balance)
   end
 
   def withdraw(amount)
     @balance -= amount
-    @repository.add_withdrawal_transaction(amount)
+    @repository.add_withdrawal_transaction(amount, @balance)
   end
 
   def print_statement
@@ -22,13 +22,4 @@ class Account
       puts "#{transaction[:date]} || #{transaction[:amount]} || #{transaction[:balance]}\n"
     end
   end
-
-  private
-    def record_transaction(amount)
-      @transactions.unshift({
-        date: Date.today.strftime("%d/%m/%Y"),
-        amount: amount,
-        balance: @balance
-      })
-    end
 end
