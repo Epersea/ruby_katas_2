@@ -1,11 +1,13 @@
 require 'timecop'
 require_relative '../account'
+require_relative '../transaction_repository'
 
 RSpec.describe Account do
 
   context 'Acceptance test' do
     it 'implements desired behaviour' do
-      account = Account.new
+      transaction_repository = TransactionRepository.new
+      account = Account.new(transaction_repository)
 
       Timecop.freeze(2012, 1, 10)
       account.deposit(1000)
@@ -25,20 +27,33 @@ RSpec.describe Account do
   end
 
   context 'Unit tests' do
-    let(:account) { AccountHelper.new }
+    let(:transaction_repository) { TransactionRepository.new}
+    let(:account) { AccountHelper.new(transaction_repository) }
+    
     context 'After a deposit' do
-      before(:each) do
-        Timecop.freeze(2012, 1, 10)
-        account.deposit(1000)
-      end
-
       it 'balance goes up' do
+        account.deposit(1000)
         expected_balance = 1000
         expect(account.balance).to eq(expected_balance)
       end
 
-      it 'transaction is recorded' do
-        expect(account.transactions).to eq([{:amount=>1000, :balance=>1000, :date=>"10/01/2012"}])
+      it 'transaction repository is called to add the transaction' do
+        expect(transaction_repository).to receive(:add_deposit_transaction).with(1000)
+        account.deposit(1000)
+      end
+    end
+
+    context 'After a withdrawal' do
+
+      it 'balance goes down' do
+        account.withdraw(500)
+        expected_balance = -500
+        expect(account.balance).to eq(expected_balance)
+      end
+
+      it 'transaction repository is called to add the transaction' do
+        expect(transaction_repository).to receive(:add_withdrawal_transaction).with(500)
+        account.withdraw(500)
       end
     end
   end
@@ -47,10 +62,6 @@ RSpec.describe Account do
   class AccountHelper < Account
     def balance
       @balance
-    end
-
-    def transactions
-      @transactions
     end
   end
 end

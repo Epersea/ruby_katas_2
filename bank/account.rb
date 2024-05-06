@@ -1,19 +1,19 @@
 require 'timecop'
 
 class Account
-  def initialize
+  def initialize(repository)
     @balance = 0
-    @transactions = []
+    @repository = repository
   end
 
   def deposit(amount)
     @balance += amount
-    record_transaction(amount)
+    @repository.add_deposit_transaction(amount)
   end
 
   def withdraw(amount)
     @balance -= amount
-    record_transaction(-amount)
+    @repository.add_withdrawal_transaction(amount)
   end
 
   def print_statement
